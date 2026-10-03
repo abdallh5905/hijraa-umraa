@@ -9,12 +9,52 @@
     <meta name="theme-color" content="#064e3b" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
 
-    <!-- تحويل فوري على واتساب قبل تحميل أي شيء -->
+    <!-- TikTok Pixel Code Start -->
     <script>
-      var WA_NUMBER = '966599413627';
-      var WA_TEXT = 'السلام عليكم، أريد الاستفسار عن تنظيم رحلات عمرة من الرياض';
-      var WA_URL = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(WA_TEXT);
-      window.location.replace(WA_URL);
+    !function (w, d, t) {
+      w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(
+    var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
+    ;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
+
+      ttq.load('DB08ON3C77U00R9PU5I0');
+      ttq.page();
+    }(window, document, 'ttq');
+    </script>
+    <!-- TikTok Pixel Code End -->
+
+    <script>
+      // بيانات الصفحة اللي بتتبعت مع أحداث تيكتوك
+      var TT_CONTENTS = [{
+        content_id: 'umrah-riyadh',
+        content_type: 'product',
+        content_name: 'تنظيم رحلات عمرة من الرياض'
+      }];
+      ttq.track('ViewContent', { contents: TT_CONTENTS });
+
+      var WA_URL = 'https://wa.me/966599413627?text=' + encodeURIComponent('السلام عليكم، أريد الاستفسار عن تنظيم رحلات عمرة من الرياض');
+
+      // يسجّل الأحداث في البكسل وبعدين يفتح الواتساب (التأخير البسيط عشان الحدث يلحق يتبعت)
+      function goToWhatsApp(events, replace) {
+        events.forEach(function (ev) { ttq.track(ev, { contents: TT_CONTENTS }); });
+        setTimeout(function () {
+          if (replace) window.location.replace(WA_URL);
+          else window.location.href = WA_URL;
+        }, 400);
+      }
+
+      // تحويل تلقائي أول ما البكسل يجهز، ولو اتأخر أو اتمنع يحوّل بعد 2.5 ثانية
+      var autoDone = false;
+      var pixelWait = setInterval(function () {
+        // ttq.initialize بتبقى true لما مكتبة تيكتوك تحمّل (ttq.ready مش بتشتغل مع الكود ده)
+        if (window.ttq.initialize === true) autoRedirect();
+      }, 50);
+      function autoRedirect() {
+        clearInterval(pixelWait);
+        if (autoDone) return;
+        autoDone = true;
+        goToWhatsApp(['Contact'], true);
+      }
+      setTimeout(autoRedirect, 2500);
     </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -45,8 +85,12 @@
       }
       .wrap{position:relative;z-index:1;width:100%;max-width:1060px;margin-inline:auto;padding:clamp(40px,7vw,70px) clamp(18px,4vw,26px)}
 
+      .brand{display:flex;align-items:center;gap:14px;margin-bottom:22px}
+      .brand-name{display:flex;flex-direction:column;line-height:1.3}
+      .brand-name strong{font-size:1.35rem;font-weight:900;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.4)}
+      .brand-name small{font-size:.95rem;font-weight:800;color:var(--gold-light)}
       .mark{
-        width:78px;height:78px;border-radius:22px;display:grid;place-items:center;margin-bottom:22px;
+        width:78px;height:78px;border-radius:22px;display:grid;place-items:center;flex-shrink:0;
         background:linear-gradient(140deg,#053f30,#0a7a5c 55%,#12b981);
         border:2px solid var(--gold);color:#f7e7a6;font-size:34px;
         box-shadow:0 14px 34px -12px rgba(0,0,0,.6);
@@ -108,7 +152,10 @@
       @media(max-width:600px){
         body{align-items:flex-start}
         .wrap{padding-top:44px}
-        .mark{width:66px;height:66px;font-size:29px;border-radius:19px;margin-bottom:18px}
+        .brand{gap:12px;margin-bottom:18px}
+        .brand-name strong{font-size:1.2rem}
+        .brand-name small{font-size:.88rem}
+        .mark{width:66px;height:66px;font-size:29px;border-radius:19px}
         .cta{flex-direction:column;align-items:stretch}
         .btn{width:100%}
         .btn-call{justify-content:flex-start;gap:14px}
@@ -118,9 +165,12 @@
   </head>
   <body>
     <div class="wrap">
-      <div class="mark"><i class="fa-solid fa-kaaba" aria-hidden="true"></i></div>
+      <div class="brand">
+        <div class="mark"><i class="fa-solid fa-kaaba" aria-hidden="true"></i></div>
+        <div class="brand-name"><strong>تنظيم رحلات عمرة</strong><small>من الرياض</small></div>
+      </div>
 
-      <span class="pill"><span class="dot" aria-hidden="true"></span> تنظيم رحلات عمرة من الرياض</span>
+      <span class="pill"><span class="dot" aria-hidden="true"></span> الحجز متاح الآن</span>
 
       <h1>
         رحلتك إلى بيت الله
@@ -144,7 +194,7 @@
           احجز عبر الواتساب
         </a>
 
-        <a href="tel:0599413627" class="btn btn-call">
+        <a href="tel:0599413627" class="btn btn-call" id="callBtn">
           <span class="call-ic" aria-hidden="true"><i class="fas fa-phone"></i></span>
           <span class="call-tx"><small>اتصال مباشر</small><bdo dir="ltr">0599413627</bdo></span>
         </a>
@@ -155,11 +205,18 @@
     </div>
 
     <script>
-      // محاولة تحويل إضافية بعد اكتمال التحميل (لو منع المتصفح التحويل المبكر)
+      // اللي التحويل التلقائي مفتحلوش الواتساب وضغط الزرار بنفسه بيتسجل هنا
       (function () {
-        var btn = document.getElementById('waBtn');
-        if (btn) btn.href = WA_URL;
-        setTimeout(function () { window.location.href = WA_URL; }, 1200);
+        document.getElementById('waBtn').addEventListener('click', function (e) {
+          e.preventDefault();
+          autoDone = true;
+          goToWhatsApp(['ClickButton', 'Contact'], false);
+        });
+
+        document.getElementById('callBtn').addEventListener('click', function () {
+          ttq.track('ClickButton', { contents: TT_CONTENTS });
+          ttq.track('Contact', { contents: TT_CONTENTS });
+        });
       })();
     </script>
   </body>
